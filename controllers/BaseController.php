@@ -20,7 +20,7 @@ use yii\helpers\Url;
 
 class BaseController extends Controller {
 
-    const EXPECTIONAL_ROUTES = [
+    const EXCEPTIONAL_ROUTES = [
         'site/logout',
         'site/login',
         'site/log-me-out',
@@ -49,8 +49,8 @@ class BaseController extends Controller {
                 return $this->redirect(['user/update-password', 'id' => $currentUser->id]);
             }
 
-            if (!$currentUser->canPerform($this->route) && !in_array($this->route, self::EXPECTIONAL_ROUTES)) {
-                throw new ForbiddenHttpException("Access denied! Please contact your System Adminstrator.");
+            if (!$currentUser->canPerform($this->route) && !in_array($this->route, self::EXCEPTIONAL_ROUTES)) {
+                throw new ForbiddenHttpException("Access denied! Please contact your System Administrator.");
             }
 
             return true;

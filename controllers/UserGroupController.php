@@ -12,7 +12,7 @@ use app\assets\DataDefinition;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
 use app\models\CanPerform;
-use app\models\IsMember as GroupMember;
+use app\models\GroupMember as GroupMember;
 use app\models\SystemRoute;
 use yii\helpers\Json;
 use app\models\User;

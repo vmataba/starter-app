@@ -131,7 +131,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
     }
 
     public function countGroups() {
-        return IsMember::find()->where(['user_id' => $this->id, 'is_active' => DataDefinition::BOOLEAN_TYPE_YES])->count();
+        return GroupMember::find()->where(['user_id' => $this->id, 'is_active' => DataDefinition::BOOLEAN_TYPE_YES])->count();
     }
 
     public function hasGroups() {
@@ -139,7 +139,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
     }
 
     public function getGroups() {
-        $models = IsMember::find()
+        $models = GroupMember::find()
                 ->where(['user_id' => $this->id])
                 ->andWhere("`group_id` IN (SELECT `id` FROM `user_group` WHERE `is_active` = 1)")
                 ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
