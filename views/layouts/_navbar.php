@@ -37,7 +37,7 @@ use app\models\User;
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?= User::findOne(Yii::$app->user->id)->photo ?>" class="img img-circle" alt="User Image" style="width: 35px; height: 35px"> <span><?= Yii::$app->session->get('user')->getFullName() ?></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?= Yii::$app->request->baseUrl.'/'. User::findOne(Yii::$app->user->id)->photo ?>" class="img img-circle" alt="User Image" style="width: 35px; height: 35px"> <span><?= Yii::$app->session->get('user')->getFullName() ?></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="<?= Url::to(['user/my-profile', 'id' => Yii::$app->user->id]) ?>"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 <!--                    <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>

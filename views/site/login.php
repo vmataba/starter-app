@@ -55,7 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-body">
 
                 <?php if (Institution::hasInstance()): ?>
-                    <img src="<?= Institution::getInstance()->logo ?>" class="img center-block" style="width: <?= Institution::getInstance()->logo_width ?>; height: <?= Institution::getInstance()->logo_height ?>"/>
+
+                <?=  Yii::$app->request->baseUrl ?>
+                    <img src="<?= Yii::$app->request->baseUrl.'/'.Institution::getInstance()->logo ?>" class="img center-block" style="width: <?= Institution::getInstance()->logo_width ?>; height: <?= Institution::getInstance()->logo_height ?>"/>
                 <?php else: ?>
                     <img src="<?= Institution::getDefaultLogo() ?>" class="img center-block" style="width: <?= Institution::DEFAULT_LOGO_WIDTH ?>; height: <?= Institution::DEFAULT_LOGO_HEIGHT ?>"/>
                 <?php endif; ?>

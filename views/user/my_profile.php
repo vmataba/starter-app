@@ -27,7 +27,7 @@ $currentUser = User::findOne(Yii::$app->user->id);
             <table class="table">
                 <tr>
                     <td colspan="2" align="center" style="border-top: none">
-                        <img src="<?= $model->photo ?>" style="width: 100px; height: 100px" class="img img-circle"/>
+                        <img src="<?= Yii::$app->request->baseUrl.'/'. $model->photo ?>" style="width: 100px; height: 100px" class="img img-circle"/>
                         <label class="label label-info" style="font-size: 1em; border-radius: 30px"><?= $model->getFullName() ?></label>
                     </td>
                 </tr>

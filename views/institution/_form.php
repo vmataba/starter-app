@@ -47,7 +47,7 @@ use dosamigos\ckeditor\CKEditor;
             <br>
 
 
-            <img src="<?= $model->logo ?>" style="width: 100%; height: 300px;" id="imagePreview" class="img img-responsive"/>
+            <img src="<?= Yii::$app->request->baseUrl.'/'. $model->logo ?>" style="width: 100%; height: 300px;" id="imagePreview" class="img img-responsive"/>
 
 
             <?php //$form->field($model, 'photo')->textInput(['maxlength' => true])      ?>

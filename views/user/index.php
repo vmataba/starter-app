@@ -42,7 +42,8 @@ $currentUser = User::findOne(Yii::$app->user->id);
             [
                 'attribute' => 'username',
                 'value' => function ($model) {
-                    return "<img src='{$model->photo}' style='height: 50px; width: 50px' class='img img-circle'/>&nbsp;" . $model->username;
+                    $baseUrl = Yii::$app->request->baseUrl;
+                    return "<img src='$baseUrl/{$model->photo}' style='height: 50px; width: 50px' class='img img-circle'/>&nbsp;" . $model->username;
                 },
                 'format' => 'raw',
                 'filterInputOptions' => [
