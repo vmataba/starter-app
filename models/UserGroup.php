@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\assets\DataDefinition;
+use yii\db\Query;
 
 /**
  * This is the model class for table "user_group".
@@ -16,7 +17,7 @@ use app\assets\DataDefinition;
  * @property int $created_by
  * @property string $updated_at
  * @property int $updated_by
- * 
+ *
  */
 class UserGroup extends \yii\db\ActiveRecord {
 
@@ -71,64 +72,65 @@ class UserGroup extends \yii\db\ActiveRecord {
          * At the end the code will look as, GP_00001
          */
         $lastGroup = self::find()
-                ->orderBy(['code' => SORT_DESC])
-                ->select('code')
-                ->one();
-        if ($lastGroup === null) {
+            ->orderBy(['code' => SORT_DESC])
+            ->select('code')
+            ->one();
+        if (!$lastGroup) {
             return 'GP_0001';
         }
-        $code = $lastGroup->code;
-        $count = (int) explode("_", $code)[1];
+        $count = (int)explode("_", $lastGroup['code'])[1];
         $newCount = $count + 1;
         $missingDigits = self::NUMBERS_COUNT_IN_CODE - strlen($newCount . '');
         $prefix = '';
         for ($index = 1; $index <= $missingDigits; $index++) {
             $prefix .= '0';
         }
-        return 'GP_' . $prefix . '' . $newCount;
+        return 'GP_' . $prefix . $newCount;
     }
 
     public function countRoutes() {
-        return CanPerform::find()
-                        ->where(['group_id' => $this->id])
-                        ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                        ->count();
+        return (new Query())
+            ->select('can_perform.id')
+            ->from(['can_perform' => CanPerform::tableName()])
+            ->where([
+                'can_perform.group_id' => $this->id,
+                'can_perform.is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->count();
     }
 
-    public function hasRoutes() {
+    public function hasRoutes(): bool {
         return $this->countRoutes() > 0;
     }
 
     public function hasMembers() {
-        $models = IsMember::find()
-                ->where(['group_id' => $this->id])
-                ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-        ;
+        $models = GroupMember::find()
+            ->where(['group_id' => $this->id])
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES]);
         return $models->count() > 0;
     }
 
     public function getMembers() {
-        $models = IsMember::find()
-                ->where(['group_id' => $this->id])
-                ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                ->all();
+        $models = GroupMember::find()
+            ->where(['group_id' => $this->id])
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->all();
         return $models;
     }
 
     public function getRoutes() {
         $models = CanPerform::find()
-                ->where(['group_id' => $this->id])
-                ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                ->all();
+            ->where(['group_id' => $this->id])
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->all();
         return $models;
     }
 
     public function getFreeRoutes() {
         $models = SystemRoute::find()
-                ->where("id NOT IN (SELECT system_route_id FROM can_perform WHERE group_id = $this->id AND is_active = 1)")
-                ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                ->orderBy(['controller' => SORT_ASC])
-                ->all();
+            ->where("id NOT IN (SELECT system_route_id FROM can_perform WHERE group_id = $this->id AND is_active = 1)")
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->orderBy(['controller' => SORT_ASC])
+            ->all();
         $routes = [];
         foreach ($models as $model) {
             $routes[$model->id] = $model->pretty_name;
@@ -138,9 +140,9 @@ class UserGroup extends \yii\db\ActiveRecord {
 
     public function getFreeUsers() {
         $models = User::find()
-                ->where("id NOT IN (SELECT user_id FROM is_member WHERE group_id = $this->id)")
-                ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                ->all();
+            ->where("id NOT IN (SELECT user_id FROM is_member WHERE group_id = $this->id)")
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->all();
         $users = [];
         foreach ($models as $model) {
             $users[$model->id] = $model->getFullName();
@@ -149,10 +151,10 @@ class UserGroup extends \yii\db\ActiveRecord {
     }
 
     public function hasMember($userid) {
-        $model = IsMember::findOne([
-                    'group_id' => $this->id,
-                    'user_id' => $userid,
-                    'is_active' => DataDefinition::BOOLEAN_TYPE_YES
+        $model = GroupMember::findOne([
+            'group_id' => $this->id,
+            'user_id' => $userid,
+            'is_active' => DataDefinition::BOOLEAN_TYPE_YES
         ]);
         return $model !== null;
     }
@@ -162,7 +164,7 @@ class UserGroup extends \yii\db\ActiveRecord {
         if ($user === null) {
             return;
         }
-        $groupMember = new IsMember();
+        $groupMember = new GroupMember();
         $groupMember->user_id = $user->id;
         $groupMember->group_id = $this->id;
         $groupMember->created_at = date('Y-m-d H:i:s');
@@ -171,9 +173,9 @@ class UserGroup extends \yii\db\ActiveRecord {
     }
 
     public function countMembers() {
-        return (int) IsMember::find()->where(['group_id' => $this->id])
-                        ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
-                        ->count();
+        return (int)GroupMember::find()->where(['group_id' => $this->id])
+            ->andWhere(['is_active' => DataDefinition::BOOLEAN_TYPE_YES])
+            ->count();
     }
 
     public function canBeDeleted() {

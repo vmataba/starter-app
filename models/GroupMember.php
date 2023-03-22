@@ -16,7 +16,7 @@ use Yii;
  * @property int $deactivated_by
  * @property string $deactivated_at
  */
-class IsMember extends \yii\db\ActiveRecord {
+class GroupMember extends \yii\db\ActiveRecord {
 
     /**
      * {@inheritdoc}
