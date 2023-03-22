@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <img src="<?= Yii::$app->request->baseUrl.'/'.$model->logo ?>" style="width: <?= $model->logo_width ?>; height:<?= $model->logo_height ?>"/>
+                    <img src="<?= $model->logo ?>" style="width: <?= $model->logo_width ?>; height:<?= $model->logo_height ?>"/> 
                 </div>
                 <div class="col-md-12">
                     <table class="table">

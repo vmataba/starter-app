@@ -13,11 +13,11 @@ use yii\helpers\Html;
 
             <div class="col-md-6">
                 <h5>Logo 1</h5>
-                <img src="<?=  Yii::$app->request->baseUrl.'/'.$model->logo ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
+                <img src="<?= $model->logo ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
             </div>
             <div class="col-md-6">
                 <h5>Logo 2</h5>
-                <img src="<?= Yii::$app->request->baseUrl.'/'.$model->logo2 ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
+                <img src="<?= $model->logo2 ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
             </div>
 
         </div>
@@ -42,9 +42,9 @@ use yii\helpers\Html;
                     if (!$model->hasParent()) {
                         echo "<b>--ROOT--</b>";
                     } else {
-                       echo Html::a($model->getParent()->institution_name, ['view', 'id' => $model->parent_institution_structure_id], ['target' => 'blank']);
+                       echo Html::a($model->getParent()->institution_name, ['view', 'id' => $model->parent_institution_structure_id], ['target' => 'blank']); 
                     }
-
+                    
                     ?>
                 </td>
             </tr>

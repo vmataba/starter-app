@@ -13,9 +13,6 @@ namespace app\assets\tools;
  *
  * @author Victor Mataba <vmataba0@gmail.com>
  */
-
-use Yii;
-
 class Tool {
 
     const DAYS_IN_A_MONTH = 30.4167;
@@ -40,7 +37,7 @@ class Tool {
             $onlyTime = $splittedDate[1];
         }
 
-        switch ((int)$month) {
+        switch ((int) $month) {
             case 1:
                 $textMonth = 'Jan';
                 break;
@@ -78,6 +75,7 @@ class Tool {
                 $textMonth = 'Dec';
                 break;
         }
+
 
 
         return $includeTime ? "{$textMonth}, {$day} {$year} {$onlyTime}" : "{$textMonth}, {$day} {$year}";
@@ -148,6 +146,7 @@ class Tool {
         }
 
 
+
         return $output;
     }
 
@@ -182,12 +181,12 @@ class Tool {
         }
         $newDate1 = date_create($date1);
         $newDate2 = date_create($date2);
-        $difference = (int)date_diff($newDate1, $newDate2)->format("%R%a");
+        $difference = (int) date_diff($newDate1, $newDate2)->format("%R%a");
         return $difference < 0 ? $difference * -1 : $difference;
     }
 
     public static function countMonths($date1, $date2) {
-        return round((double)number_format(self::countDays($date1, $date2) / self::DAYS_IN_A_MONTH, 2));
+        return round((double) number_format(self::countDays($date1, $date2) / self::DAYS_IN_A_MONTH, 2));
     }
 
     public static function getMonths() {
@@ -237,12 +236,12 @@ class Tool {
         }
 
         $newMonth = ($month + $monthsCount) % 12;
-        $yearIncrement = (int)(($month + $monthsCount) / 12);
+        $yearIncrement = (int) (($month + $monthsCount) / 12);
         $newYear = $year + $yearIncrement;
 
         $computedMonth = $newMonth;
 
-        if ((int)$computedMonth === 0) {
+        if ((int) $computedMonth === 0) {
             $computedMonth = 12;
             $newYear = $year + ($yearIncrement - 1);
         } else {
@@ -253,7 +252,7 @@ class Tool {
 
         return [
             'month' => $computedMonth,
-            'year' => $reduce && (int)$monthsCount === 1 ? $year : $newYear
+            'year' => $reduce && (int) $monthsCount === 1 ? $year : $newYear
         ];
     }
 
@@ -267,40 +266,36 @@ class Tool {
 
     public static function countDaysInMonth($month = null, $year = null) {
         if ($month === null) {
-            $month = (int)date('m');
+            $month = (int) date('m');
         }
         if ($year === null) {
-            $year = (int)date('Y');
+            $year = (int) date('Y');
         }
-        return cal_days_in_month(CAL_GREGORIAN, (int)$month, (int)$year);
-    }
-
-    public static function getFullPath($file):string {
-        return Yii::$app->request->baseUrl . '/' . $file;
+        return cal_days_in_month(CAL_GREGORIAN, (int) $month, (int) $year);
     }
 
     public static function getSearchIcon() {
-        return self::getFullPath('icons/search.svg');
+        return 'icons/search.svg';
     }
 
     public static function getResetIcon() {
-        return self::getFullPath('icons/reset.png');
+        return 'icons/reset.png';
     }
 
     public static function getExcelIcon() {
-        return self::getFullPath('icons/ms-excel.svg');
+        return 'icons/ms-excel.svg';
     }
 
     public static function getPdfIcon() {
-        return self::getFullPath('icons/pdf.png');
+        return 'icons/pdf.png';
     }
 
     public static function getPngIcon() {
-        return self::getFullPath('icons/png.png');
+        return 'icons/png.png';
     }
 
     public static function getKeyPassIcon() {
-        return self::getFullPath('icons/key-pass.svg');
+        return 'icons/key-pass.svg';
     }
 
 }

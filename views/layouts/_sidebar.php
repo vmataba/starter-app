@@ -66,7 +66,7 @@ $user = \Yii::$app->session['user'];
         SideNav::createMenuItem([
             'controller' => 'salutation',
             'action' => 'index',
-            'label' => 'Salutation'
+            'label' => 'Saluation'
         ])
         ?>
         <?php SideNav::endMenuItem() ?>

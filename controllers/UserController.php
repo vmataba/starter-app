@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\FileType;
-use app\models\GroupMember;
+use app\models\IsMember;
 use app\assets\DataDefinition;
 use yii\web\ForbiddenHttpException;
 use app\assets\tools\FileUploader;
@@ -218,7 +218,7 @@ class UserController extends BaseController {
 
     public function actionDeactivateGroup($id, $membershipId) {
         $model = $this->findModel($id);
-        $membership = GroupMember::findOne($membershipId);
+        $membership = IsMember::findOne($membershipId);
         if ($membership !== null) {
             $membership->is_active = DataDefinition::BOOLEAN_TYPE_NO;
             if ($membership->save()) {
@@ -232,7 +232,7 @@ class UserController extends BaseController {
 
     public function actionActivateGroup($id, $membershipId) {
         $model = $this->findModel($id);
-        $membership = GroupMember::findOne($membershipId);
+        $membership = IsMember::findOne($membershipId);
         if ($membership !== null) {
             $membership->is_active = DataDefinition::BOOLEAN_TYPE_YES;
             if ($membership->save()) {

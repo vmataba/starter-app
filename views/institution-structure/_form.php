@@ -92,7 +92,7 @@ use app\models\InstitutionStructure;
             <br>
 
 
-            <img src="<?= Yii::$app->request->baseUrl.'/'. $model->logo ?>" style="width: 250px; height: 300px;" id="imagePreview" class="img img-responsive"/>
+            <img src="<?= $model->logo ?>" style="width: 250px; height: 300px;" id="imagePreview" class="img img-responsive"/>
 
         </div>
         <div class="col-md-3">
@@ -104,7 +104,7 @@ use app\models\InstitutionStructure;
             <br>
 
 
-            <img src="<?= Yii::$app->request->baseUrl.'/'.$model->logo2 ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
+            <img src="<?= $model->logo2 ?>" style="width: 250px; height: 300px;" id="imagePreview2" class="img img-responsive"/>
         </div>
     </div>
 
